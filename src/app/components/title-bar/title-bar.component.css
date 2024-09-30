@@ -1,0 +1,63 @@
+.title-bar-container {
+  background-color: black;
+  height: 40px;
+  color: white;
+  border-bottom: 1px solid #d0d0d0;
+  -webkit-app-region: drag; /* Allow user to drag the window using this titlebar */
+  -webkit-user-select: none; /* Prevent user from selecting things */
+  user-select: none;
+}
+.app-routing-container {
+  float: right;
+}
+.window-controls-container {
+  float: right;
+  flex-direction: row-reverse;
+}
+.window-control-btn {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  height: 100%; /* Make the buttons fill the height of the header */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-app-region: no-drag; /* Allow buttons to be clickable */
+}
+
+.window-control-btn:hover {
+  background-color: #d0d0d0;
+}
+
+mat-icon {
+  font-size: 20px;
+  color: white;
+}
+
+.app-routing-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.app-routing-btn {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  height: 100%; /* Make the buttons fill the height of the header */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-app-region: no-drag; /* Allow buttons to be clickable */
+}
+
+.app-routing-btn:hover {
+  background-color: #d0d0d0;
+}
+
+.app-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+}

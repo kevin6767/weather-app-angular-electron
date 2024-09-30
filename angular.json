@@ -46,13 +46,21 @@
             "development": {
               "fileReplacements": [
                 {
-                  "replace": "src/app/environments/environment.ts",
-                  "with": "src/app/environments/environment.default.ts"
+                  "replace": "src/app/environment/environments.ts",
+                  "with": "src/app/enviroment/enviroment.localhost.ts"
                 }
               ],
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "electron": {
+              "fileReplacements": [
+                {
+                  "replace": "src/app/environment/environments.ts",
+                  "with": "src/app/enviroment/enviroment.localhost.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"

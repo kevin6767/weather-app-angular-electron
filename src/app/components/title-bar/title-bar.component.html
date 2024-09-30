@@ -1,1 +1,43 @@
-<p>title-bar works!</p>
+<header class="title-bar-container">
+  <div style="height: 100%">
+    <div class="window-controls-container" style="display: flex; height: 100%">
+      <button
+        mat-raised-button
+        matTooltip="Close"
+        class="window-control-btn"
+        (click)="closeWindow()"
+      >
+        <mat-icon fontIcon="close"></mat-icon>
+      </button>
+      <button
+        mat-raised-button
+        matTooltip="Maximize"
+        class="window-control-btn"
+        (click)="maximizeWindow()"
+      >
+        <mat-icon fontIcon="open_in_full"></mat-icon>
+      </button>
+      <button
+        mat-raised-button
+        matTooltip="Minimize"
+        class="window-control-btn"
+        (click)="minimizeWindow()"
+      >
+        <mat-icon fontIcon="minimize"></mat-icon>
+      </button>
+    </div>
+    <div class="app-routing-container">
+      <button
+        mat-raised-button
+        (click)="navigateTo('settings')"
+        class="app-routing-btn"
+      >
+        Settings
+      </button>
+      <button mat-raised-button (click)="handleLogin()" class="app-routing-btn">
+        Login
+      </button>
+    </div>
+    <div class="app-title-container">Weather App with Angular and Electron</div>
+  </div>
+</header>
