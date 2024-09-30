@@ -10,4 +10,3 @@
 * [ ] weather display
 * [ ] welcome page if user isn't logged in / dashboard if they are logged in
 * [ ] setup setting for console
-* [ ] 
