@@ -1,1 +1,1 @@
-* [ ] plan meeting
+* [x] plan meeting
