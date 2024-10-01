@@ -4,6 +4,8 @@ import { provideOAuthClient } from 'angular-oauth2-oidc';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
+import { userReducer } from './state/reducers/user/user.reducer';
+import { authReducer } from './state/reducers/auth/auth.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -11,6 +13,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideOAuthClient(),
-    provideStore()
-],
+    provideStore({ user: userReducer, auth: authReducer }),
+  ],
 };

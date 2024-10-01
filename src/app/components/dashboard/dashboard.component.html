@@ -1,1 +1,6 @@
-<p>dashboard works!</p>
+<div *ngIf="user$ | async as user; else noUser">
+  <p>User: {{ user | json }}</p>
+</div>
+<ng-template #noUser>
+  <p>No user logged in</p>
+</ng-template>
