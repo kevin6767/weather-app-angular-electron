@@ -20,5 +20,6 @@ contextBridge.exposeInMainWorld("electron", {
         ipcRenderer.on(channel, (event, ...args) => func(...args));
       }
     },
+    dbQuery: (query) => ipcRenderer.invoke("db-query", query),
   },
 });

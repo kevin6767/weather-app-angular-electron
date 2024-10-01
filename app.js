@@ -1,6 +1,9 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const url = require("url");
 const path = require("path");
+const sql = require("sqlite3");
+
+let db;
 
 if (process.defaultApp) {
   if (process.argv.length >= 2) {
@@ -20,6 +23,7 @@ function createWindow() {
     height: 800,
     frame: false,
     webPreferences: {
+      nodeIntegration: false,
       contextIsolation: true,
       enableRemoteModule: true,
       preload: path.join(__dirname, "preload.js"),
@@ -39,6 +43,23 @@ function createWindow() {
       userAgent: "Chrome",
     },
   );
+
+  db = new sql.Database("weatherapp.db", (err) => {
+    if (err) {
+      console.error("Failed to connect to the database:", err.message);
+    } else {
+      console.log("Connected to the SQLite database.");
+    }
+  });
+
+  db.serialize(() => {
+    // Create a table if it doesn't exist
+    db.run(`CREATE TABLE IF NOT EXISTS weather_app_data (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    oauth_key TEXT NOT NULL,
+    weather_key TEXT NOT NULL
+  )`);
+  });
 
   mainWindow.on("closed", function () {
     mainWindow = null;
@@ -61,6 +82,20 @@ function createWindow() {
     if (mainWindow) {
       mainWindow.close();
     }
+  });
+
+  ipcMain.handle("db-query", async (event, sqlQuery) => {
+    console.log("Received query:", sqlQuery);
+    return new Promise((resolve, reject) => {
+      db.all(sqlQuery, (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          console.log("Query result:", rows); 
+          resolve(rows);
+        }
+      });
+    });
   });
 }
 
@@ -98,7 +133,7 @@ function openOAuthWindow() {
   });
 }
 
-// Listen for the request to open the OAuth window
+
 ipcMain.on("open-oauth-window", () => {
   openOAuthWindow();
 });
@@ -107,17 +142,17 @@ app.on("ready", () => {
   createWindow(); // Create the main browser window
 });
 
-// Quit app when all windows are closed, except on macOS
+
 app.on("window-all-closed", function () {
   if (process.platform !== "darwin") app.quit();
 });
 
-// Recreate a window when the app is activated (macOS)
+
 app.on("activate", function () {
   if (mainWindow === null) createWindow();
 });
 
-// Ensure single instance of the application
+
 const gotTheLockFile = app.requestSingleInstanceLock();
 
 if (!gotTheLockFile) {
