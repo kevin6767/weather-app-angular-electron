@@ -7,7 +7,7 @@ import {
   RouterLinkActive,
   Router,
   RouterModule,
-} from '@angular/router'; // Import RouterModule
+} from '@angular/router';
 import { AuthGoogleService } from '../../services/auth-google/auth-google.service';
 
 @Component({
@@ -19,17 +19,17 @@ import { AuthGoogleService } from '../../services/auth-google/auth-google.servic
     MatTooltipModule,
     RouterLink,
     RouterLinkActive,
-    RouterModule, // Add RouterModule here
+    RouterModule,
   ],
   templateUrl: './title-bar.component.html',
   styleUrls: ['./title-bar.component.css'],
 })
 export class TitleBarComponent {
-  ipcRenderer: any;
+  private ipcRenderer = (window as any).electron?.ipcRenderer; // Access ipcRenderer
+
   private authService = inject(AuthGoogleService);
 
   constructor(private router: Router) {
-    this.ipcRenderer = (window as any).electron?.ipcRenderer;
     console.log('IPCRenderer:', this.ipcRenderer);
     console.log((window as any).electron);
   }
@@ -57,7 +57,7 @@ export class TitleBarComponent {
 
   closeWindow() {
     if (this.ipcRenderer) {
-      this.ipcRenderer.send('close-window');
+      this.ipcRenderer.send('close-window'); // Ensure this matches what you have in the main process
     }
   }
 }

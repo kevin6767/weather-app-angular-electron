@@ -1,18 +1,19 @@
 import { Injectable, inject } from '@angular/core';
 import { OAuthService, AuthConfig } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
-import { environment } from '../../enviroment/enviroment.localhost';
+import { environment } from '../../enviroment/enviroment.localhost'; // Ensure this path is correct
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGoogleService {
-  private oAuthService = inject(OAuthService); // Assume OAuthService is injected as a dependency
+  private oAuthService = inject(OAuthService);
   private router = inject(Router);
   private url = environment.OAUTH_KEY;
 
   constructor() {
     this.initConfiguration();
+    this.setupIpcListeners(); // Setup IPC listeners on construction
   }
 
   initConfiguration() {
@@ -20,17 +21,23 @@ export class AuthGoogleService {
       issuer: 'https://accounts.google.com',
       strictDiscoveryDocumentValidation: false,
       clientId: this.url,
-      redirectUri: window.location.origin + '/dashboard',
+      redirectUri: this.isElectronApp()
+        ? 'https://yourapp.com/oauth/callback' // Set redirect URI for Electron
+        : 'http://localhost:4200/oauth/redirect', // Normal localhost redirect for web
       scope: 'openid profile email',
     };
-    console.log(window.location.origin);
+
+    console.log('Initializing AuthGoogleService');
+    console.log('Is Electron App:', this.isElectronApp());
+    console.log('Client ID:', this.url);
+
     this.oAuthService.configure(authConfig);
     this.oAuthService.setupAutomaticSilentRefresh();
     this.oAuthService.loadDiscoveryDocumentAndTryLogin();
   }
 
   login(): void {
-    this.oAuthService.initCodeFlow();
+    this.loginViaElectron();
   }
 
   logout() {
@@ -45,5 +52,32 @@ export class AuthGoogleService {
 
   getToken() {
     return this.oAuthService.getAccessToken();
+  }
+
+  private isElectronApp(): boolean {
+    return !!(window && window.process && window.process.type);
+  }
+
+  private setupIpcListeners() {
+    // Listen for the access token sent back from the main process
+    if (window.electron && window.electron.ipcRenderer) {
+      window.electron.ipcRenderer.on('oauth-token', (token) => {
+        console.log('Received OAuth token from main process:', token);
+        this.oAuthService.tryLogin({
+          customHashFragment: `access_token=${token}`,
+        });
+      });
+    } else {
+      console.error('ipcRenderer is not available');
+    }
+  }
+
+  private loginViaElectron(): void {
+    // Ensure window.electron is defined before using it
+    if (window.electron && window.electron.ipcRenderer) {
+      window.electron.ipcRenderer.send('open-oauth-window'); // Send a message to the main process
+    } else {
+      console.error('Electron is not available or ipcRenderer is not defined');
+    }
   }
 }
