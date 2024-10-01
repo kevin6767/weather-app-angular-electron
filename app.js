@@ -1,9 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const url = require("url");
 const path = require("path");
-const sql = require("sqlite3");
-
-let db;
+const { initializeDatabase, queryDatabase } = require("./src/database");
 
 if (process.defaultApp) {
   if (process.argv.length >= 2) {
@@ -44,23 +42,6 @@ function createWindow() {
     },
   );
 
-  db = new sql.Database("weatherapp.db", (err) => {
-    if (err) {
-      console.error("Failed to connect to the database:", err.message);
-    } else {
-      console.log("Connected to the SQLite database.");
-    }
-  });
-
-  db.serialize(() => {
-    // Create a table if it doesn't exist
-    db.run(`CREATE TABLE IF NOT EXISTS weather_app_data (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    oauth_key TEXT NOT NULL,
-    weather_key TEXT NOT NULL
-  )`);
-  });
-
   mainWindow.on("closed", function () {
     mainWindow = null;
   });
@@ -85,17 +66,13 @@ function createWindow() {
   });
 
   ipcMain.handle("db-query", async (event, sqlQuery) => {
-    console.log("Received query:", sqlQuery);
-    return new Promise((resolve, reject) => {
-      db.all(sqlQuery, (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          console.log("Query result:", rows); 
-          resolve(rows);
-        }
-      });
-    });
+    try {
+      const result = await queryDatabase(sqlQuery);
+      return result;
+    } catch (error) {
+      console.error("Error in db-query handler:", error);
+      throw error;
+    }
   });
 }
 
@@ -122,7 +99,6 @@ function openOAuthWindow() {
       );
       console.log("Access Token:", accessToken);
 
-      // Send token back to renderer process (Angular)
       mainWindow.webContents.send("oauth-token", accessToken);
       oauthWindow.close();
     }
@@ -133,25 +109,26 @@ function openOAuthWindow() {
   });
 }
 
-
 ipcMain.on("open-oauth-window", () => {
   openOAuthWindow();
 });
 
-app.on("ready", () => {
-  createWindow(); // Create the main browser window
+app.on("ready", async () => {
+  try {
+    await initializeDatabase();
+    createWindow();
+  } catch (error) {
+    console.error("Failed to initialize database:", error);
+  }
 });
-
 
 app.on("window-all-closed", function () {
   if (process.platform !== "darwin") app.quit();
 });
 
-
 app.on("activate", function () {
   if (mainWindow === null) createWindow();
 });
-
 
 const gotTheLockFile = app.requestSingleInstanceLock();
 
