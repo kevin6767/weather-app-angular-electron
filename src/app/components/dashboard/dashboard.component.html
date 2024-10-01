@@ -1,6 +1,7 @@
-<div *ngIf="user$ | async as user; else noUser">
-  <app-weather-dashboard></app-weather-dashboard>
+<div class="dashboard-container">
+  @if (user$ | async; as user) {
+    <app-weather-dashboard></app-weather-dashboard>
+  } @else {
+    <app-welcome-dashboard></app-welcome-dashboard>
+  }
 </div>
-<ng-template #noUser>
-  <p>No user logged in</p>
-</ng-template>

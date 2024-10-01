@@ -4,10 +4,11 @@ import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
 import { selectIsLoggedIn } from '../../selectors/auth.selectors';
 import { WeatherDashboardComponent } from '../weather-dashboard/weather-dashboard.component';
+import { WelcomeDashboardComponent } from '../welcome-dashboard/welcome-dashboard.component';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, WeatherDashboardComponent],
+  imports: [CommonModule, WeatherDashboardComponent, WelcomeDashboardComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
