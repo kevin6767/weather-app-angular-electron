@@ -1,0 +1,36 @@
+<div class="weather-dashboard">
+  <h1>Weather Dashboard</h1>
+
+  <form [formGroup]="weatherForm" (ngSubmit)="getWeather()">
+    <input
+      type="text"
+      formControlName="input"
+      placeholder="Enter city or zip code"
+    />
+    <button type="submit">Get Weather</button>
+  </form>
+
+  @if (errorMessage) {
+    <div class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+  }
+
+  @if (!errorMessage) {
+    <div>
+      @if (data$ | async; as data) {
+        <div>
+          <div class="weather-card">
+            <h2>{{ data.location.name }}</h2>
+            <img [src]="data.current.weather_icons[0]" alt="Weather icon" />
+            <p>Temperature: {{ data.current.temperature }} °C</p>
+            <p>Condition: {{ data.current.weather_descriptions[0] }}</p>
+            <p>Humidity: {{ data.current.humidity }}%</p>
+          </div>
+        </div>
+      } @else {
+        <p>Loading weather data...</p>
+      }
+    </div>
+  }
+</div>

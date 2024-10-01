@@ -39,7 +39,6 @@ export class AuthGoogleService {
 
   login(): void {
     this.loginViaElectron();
-    this.store.dispatch(login());
   }
 
   logout() {
@@ -74,6 +73,7 @@ export class AuthGoogleService {
     this.userService.fetchUserProfile(token).subscribe({
       next: (profile) => {
         this.store.dispatch(setUser({ user: profile }));
+        this.store.dispatch(login());
       },
       error: (err) => {
         console.error('Failed to fetch user profile:', err);

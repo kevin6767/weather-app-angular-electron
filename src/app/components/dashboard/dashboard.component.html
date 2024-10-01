@@ -1,5 +1,5 @@
 <div *ngIf="user$ | async as user; else noUser">
-  <p>User: {{ user | json }}</p>
+  <app-weather-dashboard></app-weather-dashboard>
 </div>
 <ng-template #noUser>
   <p>No user logged in</p>

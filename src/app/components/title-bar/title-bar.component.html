@@ -34,22 +34,23 @@
       >
         Settings
       </button>
-      <button
-        mat-raised-button
-        (click)="handleLogin()"
-        class="app-routing-btn"
-        *ngIf="!isLoggedIn"
-      >
-        Login
-      </button>
-      <button
-        mat-raised-button
-        (click)="handleLogout()"
-        class="app-routing-btn"
-        *ngIf="isLoggedIn"
-      >
-        Logout
-      </button>
+      @if (!isLoggedIn) {
+        <button
+          mat-raised-button
+          (click)="handleLogin()"
+          class="app-routing-btn"
+        >
+          Login
+        </button>
+      } @else {
+        <button
+          mat-raised-button
+          (click)="handleLogout()"
+          class="app-routing-btn"
+        >
+          Logout
+        </button>
+      }
     </div>
     <div class="app-title-container">Weather App with Angular and Electron</div>
   </div>

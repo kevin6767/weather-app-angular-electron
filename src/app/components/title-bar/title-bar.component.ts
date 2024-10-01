@@ -12,7 +12,7 @@ import { AuthGoogleService } from '../../services/auth-google/auth-google.servic
 import { Observable } from 'rxjs';
 import { selectIsLoggedIn } from '../../state/selector/auth.selectors';
 import { Store } from '@ngrx/store';
-import { logout } from '../../state/actions/auth/auth.actions';
+import { logout, login } from '../../state/actions/auth/auth.actions';
 import { clearUser } from '../../state/actions/user/user.actions';
 import { CommonModule } from '@angular/common';
 
