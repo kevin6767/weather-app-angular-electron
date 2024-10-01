@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { OAuthService, AuthConfig } from 'angular-oauth2-oidc';
-import { environment } from '../../enviroment/enviroment.localhost';
-import { UserService } from '../user/user.service';
 import { Store } from '@ngrx/store';
+import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+import { environment } from '../../enviroment/enviroment.localhost';
+import { login } from '../../state/actions/auth/auth.actions';
 import { setUser } from '../../state/actions/user/user.actions';
-import { login, logout } from '../../state/actions/auth/auth.actions';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root',

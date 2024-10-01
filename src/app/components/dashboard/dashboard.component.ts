@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
-import { selectIsLoggedIn } from '../../state/selector/auth.selectors';
-import { WeatherDashboardComponent } from "../weather-dashboard/weather-dashboard.component";
+import { selectIsLoggedIn } from '../../selectors/auth.selectors';
+import { WeatherDashboardComponent } from '../weather-dashboard/weather-dashboard.component';
 @Component({
   selector: 'app-dashboard',
   standalone: true,

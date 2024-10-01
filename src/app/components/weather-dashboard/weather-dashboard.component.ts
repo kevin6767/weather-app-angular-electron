@@ -1,14 +1,13 @@
-import { Component, inject } from '@angular/core';
-import { WeatherService } from '../../services/weather/weather.service';
-import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   FormsModule,
+  ReactiveFormsModule
 } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { WeatherService } from '../../services/weather/weather.service';
 
 @Component({
   selector: 'app-weather-dashboard',

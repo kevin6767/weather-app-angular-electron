@@ -1,20 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
+  Router,
   RouterLink,
   RouterLinkActive,
-  Router,
   RouterModule,
 } from '@angular/router';
-import { AuthGoogleService } from '../../services/auth-google/auth-google.service';
-import { Observable } from 'rxjs';
-import { selectIsLoggedIn } from '../../state/selector/auth.selectors';
 import { Store } from '@ngrx/store';
-import { logout, login } from '../../state/actions/auth/auth.actions';
+import { selectIsLoggedIn } from '../../selectors/auth.selectors';
+import { AuthGoogleService } from '../../services/auth-google/auth-google.service';
+import { logout } from '../../state/actions/auth/auth.actions';
 import { clearUser } from '../../state/actions/user/user.actions';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-title-bar',

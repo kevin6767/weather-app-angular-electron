@@ -6,12 +6,13 @@
 * [x] project directory with components/services/enviroments/etc
 * [x] create title bar
 * [x] login/logout
-* [ ] weather api setup
-* [ ] weather display
+* [x] weather api setup
+* [x] weather display
 * [x] welcome page if user isn't logged in / dashboard if they are logged in
 * [ ] setup setting for console
 * [x] after loggin in, change the login button to logout and update the functionality
 * [ ] basic error handling
+* [ ] setup welcome page 
 
 nice to haves 
 * [ ] state management for error handlign and error handling component?
