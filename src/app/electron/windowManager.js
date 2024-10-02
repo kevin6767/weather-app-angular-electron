@@ -4,7 +4,7 @@ const url = require("url");
 
 let mainWindow;
 
-function createWindow() {
+const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
@@ -37,7 +37,7 @@ function createWindow() {
 
   mainWindow.webContents.openDevTools();
   setupIpcHandlers();
-}
+};
 
 const setupIpcHandlers = () => {
   ipcMain.on("minimize-window", () => {

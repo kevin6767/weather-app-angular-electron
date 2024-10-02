@@ -75,7 +75,7 @@ const closeDatabase = () => {
   }
 };
 
-function setupDbIpcHandlers() {
+const setupDbIpcHandlers = () => {
   ipcMain.handle("db-query", async (event, sqlQuery) => {
     try {
       const result = await queryDatabase(sqlQuery);
@@ -97,7 +97,7 @@ function setupDbIpcHandlers() {
       });
     });
   });
-}
+};
 
 module.exports = {
   setupDatabase: initializeDatabase,

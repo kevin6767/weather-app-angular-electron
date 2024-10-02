@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { WeatherService } from '../../services/weather/weather.service';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { selectIsLoggedIn } from '../../selectors/auth.selectors';
 import { UserProfile } from '../../services/user/user.service';
+import { WeatherService } from '../../services/weather/weather.service';
 import { celsiusToFahrenheit } from './utils/weather-dashboard-util';
 
 @Component({
@@ -28,13 +28,12 @@ export class WeatherDashboardComponent {
   isLoggedIn$: Observable<boolean>;
   weatherTemp: number | null = null;
 
-  private weatherService = inject(WeatherService);
-
   isLoading = false;
 
   constructor(
     private store: Store<{ user: any; auth: { isLoggedIn: boolean } }>,
     private fb: FormBuilder,
+    private weatherService: WeatherService,
   ) {
     this.user$ = this.store.select((state) => state.user.user);
     this.isLoggedIn$ = this.store.select(selectIsLoggedIn);

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -32,12 +32,14 @@ import { clearUser } from '../../state/actions/user/user.actions';
 })
 export class TitleBarComponent {
   isLoggedIn: boolean = false;
-  processWorker = false;
+  processWorker: boolean = false;
   private ipcRenderer = (window as any).electron?.ipcRenderer;
-  private store = inject(Store);
-  private authService = inject(AuthGoogleService);
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private store: Store,
+    private authService: AuthGoogleService,
+  ) {
     this.store.select(selectIsLoggedIn).subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
     });

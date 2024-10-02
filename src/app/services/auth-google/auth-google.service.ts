@@ -1,25 +1,25 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { login } from '../../state/actions/auth/auth.actions';
 import { setUser } from '../../state/actions/user/user.actions';
-import { UserService } from '../user/user.service';
 import { DatabaseService } from '../database/database.service';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
 import { SuccessHandlerService } from '../success-handler/success-handler.service';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGoogleService {
-  private oAuthService = inject(OAuthService);
-  private userService = inject(UserService);
-  private dbService = inject(DatabaseService);
-  private errorHandlingService = inject(ErrorHandlingService);
-  private sucessHandlingService = inject(SuccessHandlerService);
-  private store = inject(Store);
-
-  constructor() {
+  constructor(
+    private oAuthService: OAuthService,
+    private dbService: DatabaseService,
+    private userService: UserService,
+    private errorHandlingService: ErrorHandlingService,
+    private sucessHandlingService: SuccessHandlerService,
+    private store: Store,
+  ) {
     this.setupIpcListeners();
   }
 

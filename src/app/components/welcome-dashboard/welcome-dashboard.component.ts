@@ -5,8 +5,8 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './welcome-dashboard.component.html',
-  styleUrl: './welcome-dashboard.component.css'
+  styleUrl: './welcome-dashboard.component.css',
 })
 export class WelcomeDashboardComponent {
-
+  constructor() {}
 }

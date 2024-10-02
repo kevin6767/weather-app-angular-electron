@@ -1,12 +1,13 @@
-import { Injectable, inject } from '@angular/core';
-import { UserProfile } from '../user/user.service';
+import { Injectable } from '@angular/core';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
+import { UserProfile } from '../user/user.service';
 @Injectable({
   providedIn: 'root',
 })
 export class DatabaseService {
   private ipcRenderer = (window as any).electron?.ipcRenderer;
-  private errorHandlingService = inject(ErrorHandlingService);
+
+  constructor(private errorHandlingService: ErrorHandlingService) {}
   async queryDatabase(query: string) {
     try {
       const result = await this.ipcRenderer.dbQuery(query);

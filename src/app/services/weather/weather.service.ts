@@ -1,10 +1,9 @@
-import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { DatabaseService } from '../database/database.service';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
-import { SuccessHandlerService } from '../success-handler/success-handler.service';
 
 export interface WeatherData {
   location: string;
@@ -16,11 +15,13 @@ export interface WeatherData {
   providedIn: 'root',
 })
 export class WeatherService {
-  private dbService = inject(DatabaseService);
-  private errorHandlingService = inject(ErrorHandlingService);
   private apiKey: string = '';
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private errorHandlingService: ErrorHandlingService,
+    private dbService: DatabaseService,
+  ) {
     this.loadApiKey();
   }
 
