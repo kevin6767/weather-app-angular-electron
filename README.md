@@ -50,3 +50,16 @@ nice to haves
 * [x]  move app.js and preload.js to src/
 * [ ]  smart check for storing api keys - if they don't work, don't store in db
 * [ ]  util for celcius to farenheight
+
+## Installation
+
+```bash
+  git clone https://github.com/kevin6767/weather-app-angular-electron.git
+  cd https://github.com/kevin6767/weather-app-angular-electron.git
+```
+
+## Environment Variables
+
+To run this project you do not have to immediately have an api key for weatherstack.com or oAuth2 since the project handles these keys dynamically, however once you are 
+prompted to enter this information, you will need to have your own keys. 
+
