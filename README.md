@@ -42,7 +42,7 @@ I have developed a dynamic weather application using Electron, Angular, OAuth2, 
 * [x]  setup welcome page 
 * [x]  using SQL database to store API keys and user information
 
-nice to haves 
+ ## nice to haves 
 * [x]  state management for error handlign and error handling component?
 * [ ]  change window controls based on state (if minimized, use a different icon)
 * [ ]  recognzing f12 for dev tools instead of manually adding it on app load
