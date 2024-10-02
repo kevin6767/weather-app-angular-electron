@@ -9,8 +9,7 @@ function initializeDatabase() {
         return reject(err);
       }
       console.log("Connected to the SQLite database.");
-
-      // Create tables
+      // There must be a better way to handle this
       db.serialize(() => {
         db.run(
           `CREATE TABLE IF NOT EXISTS weather_app_data (
@@ -20,10 +19,27 @@ function initializeDatabase() {
           )`,
           (createErr) => {
             if (createErr) {
-              console.error("Error creating table:", createErr);
+              console.error(
+                "Error creating weather_app_data table:",
+                createErr,
+              );
               return reject(createErr);
             }
-            resolve();
+
+            db.run(
+              `CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                email TEXT NOT NULL UNIQUE
+              )`,
+              (createErr) => {
+                if (createErr) {
+                  console.error("Error creating users table:", createErr);
+                  return reject(createErr);
+                }
+                resolve();
+              },
+            );
           },
         );
       });
@@ -69,6 +85,18 @@ function setupDbIpcHandlers() {
       console.error("Error in db-query handler:", error);
       throw error;
     }
+  });
+
+  ipcMain.handle("db-update", (event, query, params) => {
+    return new Promise((resolve, reject) => {
+      db.run(query, params, function (err) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve({ changes: this.changes });
+        }
+      });
+    });
   });
 }
 

@@ -3,8 +3,8 @@
   height: 40px;
   color: white;
   border-bottom: 1px solid #d0d0d0;
-  -webkit-app-region: drag; /* Allow user to drag the window using this titlebar */
-  -webkit-user-select: none; /* Prevent user from selecting things */
+  -webkit-app-region: drag;
+  -webkit-user-select: none;
   user-select: none;
 }
 .app-routing-container {
@@ -18,7 +18,7 @@
   background-color: transparent;
   border: none;
   padding: 0;
-  height: 100%; /* Make the buttons fill the height of the header */
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,18 +41,25 @@ mat-icon {
 }
 
 .app-routing-btn {
-  background-color: transparent;
   border: none;
-  padding: 0;
-  height: 100%; /* Make the buttons fill the height of the header */
+  padding: 10px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  -webkit-app-region: no-drag; /* Allow buttons to be clickable */
+  -webkit-app-region: no-drag;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 0;
 }
 
 .app-routing-btn:hover {
   background-color: #d0d0d0;
+  transition: background-color 0.3s ease;
+}
+
+.app-routing-btn:focus {
+  outline: none;
 }
 
 .app-title-container {

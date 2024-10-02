@@ -27,29 +27,16 @@
       </button>
     </div>
     <div class="app-routing-container">
-      <button
-        mat-raised-button
-        (click)="navigateTo('settings')"
-        class="app-routing-btn"
-      >
+      <button (click)="navigateTo('dashboard')" class="app-routing-btn">
+        Dashboard
+      </button>
+      <button (click)="navigateTo('settings')" class="app-routing-btn">
         Settings
       </button>
       @if (!isLoggedIn) {
-        <button
-          mat-raised-button
-          (click)="handleLogin()"
-          class="app-routing-btn"
-        >
-          Login
-        </button>
+        <button (click)="handleLogin()" class="app-routing-btn">Login</button>
       } @else {
-        <button
-          mat-raised-button
-          (click)="handleLogout()"
-          class="app-routing-btn"
-        >
-          Logout
-        </button>
+        <button (click)="handleLogout()" class="app-routing-btn">Logout</button>
       }
     </div>
     <div class="app-title-container">Weather App with Angular and Electron</div>

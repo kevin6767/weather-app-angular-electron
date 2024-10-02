@@ -1,1 +1,14 @@
-<p>settings works!</p>
+<div class="settings-container">
+  <h2>Settings</h2>
+  <form [formGroup]="settingsForm" (ngSubmit)="updateDatabase()">
+    <div>
+      <label for="weatherAPIKey">Weather API Key:</label>
+      <input type="text" id="weatherAPIKey" formControlName="weatherAPIKey" />
+    </div>
+    <div>
+      <label for="regularAPIKey">Regular API Key:</label>
+      <input type="text" id="regularAPIKey" formControlName="regularAPIKey" />
+    </div>
+    <button type="submit">Save Changes</button>
+  </form>
+</div>

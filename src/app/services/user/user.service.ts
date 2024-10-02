@@ -6,14 +6,14 @@ import { catchError, retry } from 'rxjs';
 export interface UserProfile {
   email: string;
   name: string;
-  picture: string;
+  picture?: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'https://www.googleapis.com/oauth2/v2/userinfo'; 
+  private apiUrl = 'https://www.googleapis.com/oauth2/v2/userinfo';
 
   constructor(private http: HttpClient) {}
 
@@ -22,14 +22,10 @@ export class UserService {
       .get<UserProfile>(this.apiUrl, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .pipe(
-        retry(3),
-        catchError(this.handleError), 
-      );
+      .pipe(retry(3), catchError(this.handleError));
   }
 
   private handleError(error: any): Observable<never> {
-    console.error('An error occurred:', error);
     return throwError(
       () => new Error('Unable to fetch user profile; please try again later.'),
     );

@@ -1,10 +1,15 @@
 <div class="weather-dashboard">
   <h1>Weather Dashboard</h1>
 
-  <form [formGroup]="weatherForm" (ngSubmit)="getWeather()">
+  <form
+    [formGroup]="weatherForm"
+    (ngSubmit)="getWeather()"
+    class="settings-container"
+  >
     <input
       type="text"
       formControlName="input"
+      id="cityInput"
       placeholder="Enter city or zip code"
     />
     <button type="submit">Get Weather</button>

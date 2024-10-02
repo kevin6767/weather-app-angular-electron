@@ -1,6 +1,6 @@
 const { BrowserWindow, ipcMain } = require("electron");
 
-function openOAuthWindow(mainWindow) {
+function openOAuthWindow(mainWindow, apiKey) {
   const oauthWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -10,7 +10,7 @@ function openOAuthWindow(mainWindow) {
     },
   });
 
-  const googleOAuthURL = `https://accounts.google.com/o/oauth2/auth?client_id=${"344825187718-s0890gj7402cgmmoar7qfrkda8niur5n.apps.googleusercontent.com"}&redirect_uri=http://localhost:4200/oauth/callback&response_type=token&scope=email profile openid&state=STATE_PARAMETER&prompt=consent`;
+  const googleOAuthURL = `https://accounts.google.com/o/oauth2/auth?client_id=${apiKey}&redirect_uri=http://localhost:4200/oauth/callback&response_type=token&scope=email profile openid&state=STATE_PARAMETER&prompt=consent`;
 
   oauthWindow.loadURL(googleOAuthURL);
 
@@ -33,8 +33,8 @@ function openOAuthWindow(mainWindow) {
 }
 
 function setupOAuthIpcHandlers(mainWindow) {
-  ipcMain.on("open-oauth-window", () => {
-    openOAuthWindow(mainWindow);
+  ipcMain.on("open-oauth-window", (event, apiKey) => {
+    openOAuthWindow(mainWindow, apiKey);
   });
 }
 

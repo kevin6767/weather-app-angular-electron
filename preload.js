@@ -3,7 +3,6 @@ const { contextBridge, ipcRenderer } = require("electron");
 contextBridge.exposeInMainWorld("electron", {
   ipcRenderer: {
     send: (channel, data) => {
-      // Allow only certain channels
       const validChannels = [
         "minimize-window",
         "maximize-window",
@@ -21,5 +20,6 @@ contextBridge.exposeInMainWorld("electron", {
       }
     },
     dbQuery: (query) => ipcRenderer.invoke("db-query", query),
+    dbUpdate: (query, params) => ipcRenderer.invoke("db-update", query, params),
   },
 });

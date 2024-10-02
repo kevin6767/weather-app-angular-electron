@@ -1,7 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { DatabaseService } from '../database/database.service';
+import { ErrorHandlingService } from '../error-handling/error-handling.service';
+import { SuccessHandlerService } from '../success-handler/success-handler.service';
 
 export interface WeatherData {
   location: string;
@@ -13,19 +16,39 @@ export interface WeatherData {
   providedIn: 'root',
 })
 export class WeatherService {
-  private apiKey = '2a506d2e46d387eea39270737e6b3d9d';
+  private dbService = inject(DatabaseService);
+  private errorHandlingService = inject(ErrorHandlingService);
+  private apiKey: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadApiKey();
+  }
 
-  fetchWeather(query: string): Observable<WeatherData> {
-    const baseURL = `http://api.weatherstack.com/current?access_key=${this.apiKey}&query=${query}`;
+  private async loadApiKey(): Promise<void> {
+    try {
+      const dbQuery = 'SELECT * FROM weather_app_data';
+      const result = await this.dbService.queryDatabase(dbQuery);
+      if (result && result.length > 0) {
+        this.apiKey = result[0].weather_key;
+      } else {
+        this.errorHandlingService.handleError(
+          'API key not found in the database. Please add it.',
+        );
+      }
+    } catch (error) {
+      this.errorHandlingService.handleError(error);
+    }
+  }
+
+  fetchWeather(location: string): Observable<WeatherData> {
+    if (!this.apiKey) {
+      return throwError(() => new Error('API key is missing.'));
+    }
+
+    const baseURL = `http://api.weatherstack.com/current?access_key=${this.apiKey}&query=${location}`;
     return this.http.get<WeatherData>(baseURL).pipe(
       retry(3),
       catchError((error) => {
-        console.error('Error fetching weather data:', error);
-        if (error.error && error.error.info) {
-          console.error('Error Info:', error.error.info);
-        }
         return throwError(
           () =>
             new Error(

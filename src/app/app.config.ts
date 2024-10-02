@@ -6,6 +6,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
 import { userReducer } from './state/reducers/user/user.reducer';
 import { authReducer } from './state/reducers/auth/auth.reducer';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,5 +15,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideOAuthClient(),
     provideStore({ user: userReducer, auth: authReducer }),
+    provideAnimations(),
   ],
 };
