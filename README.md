@@ -69,3 +69,4 @@ prompted to enter this information, you will need to have your own keys.
 * [ ] change database table names
 * [ ] more code splitting (util files for common used functions)
 * [ ] if bad oAuth2 key, log the user out
+* [ ] add playwrite or another testing suite for electron + angular
