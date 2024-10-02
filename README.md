@@ -49,7 +49,7 @@ nice to haves
 * [ ]  add another state for before the user has logged in, but is in a different window, so you can't keep clicking the login button
 * [x]  move app.js and preload.js to src/
 * [ ]  smart check for storing api keys - if they don't work, don't store in db
-* [ ]  util for celcius to farenheight
+* [x]  util for celcius to farenheight
 
 ## Installation
 
