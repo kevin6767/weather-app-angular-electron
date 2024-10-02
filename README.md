@@ -64,3 +64,8 @@ I have developed a dynamic weather application using Electron, Angular, OAuth2, 
 To run this project you do not have to immediately have an api key for weatherstack.com or oAuth2 since the project handles these keys dynamically, however once you are 
 prompted to enter this information, you will need to have your own keys. 
 
+## Improvements
+
+* [ ] change database table names
+* [ ] more code splitting (util files for common used functions)
+* [ ] if bad oAuth2 key, log the user out
