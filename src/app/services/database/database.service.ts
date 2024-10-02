@@ -1,35 +1,34 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { UserProfile } from '../user/user.service';
-
+import { ErrorHandlingService } from '../error-handling/error-handling.service';
 @Injectable({
   providedIn: 'root',
 })
 export class DatabaseService {
   private ipcRenderer = (window as any).electron?.ipcRenderer;
-
+  private errorHandlingService = inject(ErrorHandlingService);
   async queryDatabase(query: string) {
     try {
       const result = await this.ipcRenderer.dbQuery(query);
       return result;
     } catch (error) {
-      console.error('Database query error:', error);
+      this.errorHandlingService.handleError(error);
       throw error;
     }
   }
 
   async updateDatabase(query: string, params?: any[]) {
-    // Accept two arguments
     try {
       const result = await this.ipcRenderer.dbUpdate(query, params);
       return result;
     } catch (error) {
-      console.error('Database update error:', error);
+      this.errorHandlingService.handleError(error);
       throw error;
     }
   }
 
   async userExists(email: string): Promise<boolean> {
-    const query = `SELECT COUNT(*) as count FROM users WHERE email = '${email}'`; 
+    const query = `SELECT COUNT(*) as count FROM users WHERE email = '${email}'`;
     const result = await this.queryDatabase(query);
     return result[0].count > 0;
   }

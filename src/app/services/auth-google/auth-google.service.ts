@@ -33,7 +33,6 @@ export class AuthGoogleService {
     this.sucessHandlingService.showSuccess('Logged out successfully');
   }
 
-  // IPC listeners setup on construction to handle OAuth token received from main process
   private setupIpcListeners() {
     if (window.electron && window.electron.ipcRenderer) {
       window.electron.ipcRenderer.on('oauth-token', (token) => {

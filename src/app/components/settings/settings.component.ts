@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DatabaseService } from '../../services/database/database.service';
 import { SuccessHandlerService } from '../../services/success-handler/success-handler.service';
+import { ErrorHandlingService } from '../../services/error-handling/error-handling.service';
 
 @Component({
   selector: 'app-settings',
@@ -17,6 +18,7 @@ export class SettingsComponent implements OnInit {
     private fb: FormBuilder,
     private dbService: DatabaseService,
     private successHandlerService: SuccessHandlerService,
+    private errorhandlerService: ErrorHandlingService,
   ) {
     this.settingsForm = this.fb.group({
       weatherAPIKey: [''],
@@ -51,7 +53,10 @@ export class SettingsComponent implements OnInit {
       1,
     ]);
     if (result.changes === 0) {
-      console.log('No rows were updated. Check if the record exists.');
+      this.errorhandlerService.handleError(
+        'Failed to update settings API, check if the entry exists.',
+      );
+      return;
     } else {
       this.successHandlerService.showSuccess('Settings updated successfully');
     }

@@ -40,9 +40,10 @@ export class WeatherService {
     }
   }
 
-  fetchWeather(location: string): Observable<WeatherData> {
+  async fetchWeather(location: string): Promise<Observable<WeatherData>> {
+    await this.loadApiKey();
     if (!this.apiKey) {
-      return throwError(() => new Error('API key is missing.'));
+      return throwError(() => new Error('API key is empty'));
     }
 
     const baseURL = `http://api.weatherstack.com/current?access_key=${this.apiKey}&query=${location}`;

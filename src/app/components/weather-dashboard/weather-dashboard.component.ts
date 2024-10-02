@@ -43,16 +43,17 @@ export class WeatherDashboardComponent {
     });
   }
 
-  getWeather() {
-    this.isLoading = true;
+  async getWeather() {
     const input = this.weatherForm.get('input')?.value;
+    this.isLoading = true;
     this.errorMessage = null;
-    this.data$ = this.weatherService.fetchWeather(input);
+    this.data$ = await this.weatherService.fetchWeather(input);
 
     this.data$.subscribe({
       next: (data) => {
         this.isLoading = false;
-        this.weatherTemp = celsiusToFahrenheit(data.current.temperature);
+        this.weatherTemp =
+          celsiusToFahrenheit(data?.current?.temperature) || null;
         if (data.error) {
           this.errorMessage = data.error.info;
           return;
