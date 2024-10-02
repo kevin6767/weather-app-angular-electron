@@ -12,9 +12,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 })
 export class AppComponent implements OnInit, OnDestroy {
   private token: string | null = null;
+  private ipcRenderer = (window as any).electron?.ipcRenderer;
 
   ngOnInit() {
-    (window as any).electron.receive('oauth-token', (token: any) => {
+    this.ipcRenderer.on('oauth-token', (token: any) => {
       this.token = token;
       localStorage.setItem('oauth-token', token);
     });
