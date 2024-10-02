@@ -1,6 +1,6 @@
 const { BrowserWindow, ipcMain } = require("electron");
 
-function openOAuthWindow(mainWindow, apiKey) {
+const openOAuthWindow = (mainWindow, apiKey) => {
   const oauthWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -30,12 +30,12 @@ function openOAuthWindow(mainWindow, apiKey) {
   oauthWindow.on("closed", () => {
     console.log("OAuth window closed");
   });
-}
+};
 
-function setupOAuthIpcHandlers(mainWindow) {
+const setupOAuthIpcHandlers = (mainWindow) => {
   ipcMain.on("open-oauth-window", (event, apiKey) => {
     openOAuthWindow(mainWindow, apiKey);
   });
-}
+};
 
 module.exports = { setupOAuthIpcHandlers };

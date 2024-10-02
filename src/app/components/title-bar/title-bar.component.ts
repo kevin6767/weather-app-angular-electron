@@ -32,6 +32,7 @@ import { clearUser } from '../../state/actions/user/user.actions';
 })
 export class TitleBarComponent {
   isLoggedIn: boolean = false;
+  processWorker = false;
   private ipcRenderer = (window as any).electron?.ipcRenderer;
   private store = inject(Store);
   private authService = inject(AuthGoogleService);
@@ -48,7 +49,11 @@ export class TitleBarComponent {
   }
 
   handleLogin() {
-    this.authService.login();
+    this.processWorker = true;
+    this.authService.login().then(() => {
+      console.log(this.processWorker);
+      this.processWorker = false;
+    });
   }
 
   handleLogout() {

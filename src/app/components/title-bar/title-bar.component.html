@@ -34,9 +34,21 @@
         Settings
       </button>
       @if (!isLoggedIn) {
-        <button (click)="handleLogin()" class="app-routing-btn">Login</button>
+        <button
+          (click)="handleLogin()"
+          [disabled]="processWorker"
+          class="app-routing-btn"
+        >
+          Login
+        </button>
       } @else {
-        <button (click)="handleLogout()" class="app-routing-btn">Logout</button>
+        <button
+          (click)="handleLogout()"
+          [disabled]="processWorker"
+          class="app-routing-btn"
+        >
+          Logout
+        </button>
       }
     </div>
     <div class="app-title-container">Weather App with Angular and Electron</div>

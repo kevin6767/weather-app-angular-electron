@@ -18,29 +18,13 @@ export class AuthGoogleService {
   private errorHandlingService = inject(ErrorHandlingService);
   private sucessHandlingService = inject(SuccessHandlerService);
   private store = inject(Store);
-  private url = '';
 
   constructor() {
-    this.initConfiguration();
     this.setupIpcListeners();
   }
 
-  initConfiguration() {
-    const authConfig: AuthConfig = {
-      issuer: 'https://accounts.google.com',
-      strictDiscoveryDocumentValidation: false,
-      clientId: this.url,
-      redirectUri: 'https://localhost:4200/oauth/callback',
-      scope: 'openid profile email',
-    };
-
-    this.oAuthService.configure(authConfig);
-    this.oAuthService.setupAutomaticSilentRefresh();
-    this.oAuthService.loadDiscoveryDocumentAndTryLogin();
-  }
-
-  login(): void {
-    this.loginViaElectron();
+  login(): Promise<any> {
+    return this.loginViaElectron();
   }
 
   logout() {

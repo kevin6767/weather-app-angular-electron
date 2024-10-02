@@ -39,7 +39,7 @@ function createWindow() {
   setupIpcHandlers();
 }
 
-function setupIpcHandlers() {
+const setupIpcHandlers = () => {
   ipcMain.on("minimize-window", () => {
     mainWindow.minimize();
   });
@@ -57,10 +57,10 @@ function setupIpcHandlers() {
       mainWindow.close();
     }
   });
-}
+};
 
-function getMainWindow() {
+const getMainWindow = () => {
   return mainWindow;
-}
+};
 
 module.exports = { createWindow, getMainWindow };

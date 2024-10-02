@@ -1,5 +1,11 @@
 <div class="weather-dashboard">
-  <h1>Weather Dashboard</h1>
+  @if (isLoggedIn$) {
+    <h1>Welcome {{ (user$ | async)?.name }}
+        
+    </h1>
+  } @else {
+    <h1>Welcome Dashboard</h1>
+  }
 
   <form
     [formGroup]="weatherForm"
@@ -33,7 +39,7 @@
             <p>Humidity: {{ data.current.humidity }}%</p>
           </div>
         </div>
-      } @else {
+      } @else if (isLoading) {
         <p>Loading weather data...</p>
       }
     </div>

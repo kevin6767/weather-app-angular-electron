@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -10,12 +10,17 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   private token: string | null = null;
 
   ngOnInit() {
     (window as any).electron.receive('oauth-token', (token: any) => {
       this.token = token;
+      localStorage.setItem('oauth-token', token);
     });
+  }
+
+  ngOnDestroy(): void {
+    localStorage.removeItem('oauth-token');
   }
 }

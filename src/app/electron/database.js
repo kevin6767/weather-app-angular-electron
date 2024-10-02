@@ -1,7 +1,8 @@
 const sqlite3 = require("sqlite3");
+const { ipcMain } = require("electron");
 let db;
 
-function initializeDatabase() {
+const initializeDatabase = () => {
   return new Promise((resolve, reject) => {
     db = new sqlite3.Database("weatherapp.db", (err) => {
       if (err) {
@@ -45,9 +46,9 @@ function initializeDatabase() {
       });
     });
   });
-}
+};
 
-function queryDatabase(sqlQuery) {
+const queryDatabase = (sqlQuery) => {
   return new Promise((resolve, reject) => {
     if (!db) {
       return reject(new Error("Database is not initialized."));
@@ -60,9 +61,9 @@ function queryDatabase(sqlQuery) {
       resolve(rows);
     });
   });
-}
+};
 
-function closeDatabase() {
+const closeDatabase = () => {
   if (db) {
     db.close((err) => {
       if (err) {
@@ -72,11 +73,9 @@ function closeDatabase() {
       }
     });
   }
-}
+};
 
 function setupDbIpcHandlers() {
-  const { ipcMain } = require("electron");
-
   ipcMain.handle("db-query", async (event, sqlQuery) => {
     try {
       const result = await queryDatabase(sqlQuery);
