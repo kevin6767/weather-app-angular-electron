@@ -20,8 +20,6 @@ const openOAuthWindow = (mainWindow, apiKey) => {
       const accessToken = new URLSearchParams(url.split("#")[1]).get(
         "access_token",
       );
-      console.log("Access Token:", accessToken);
-
       mainWindow.webContents.send("oauth-token", accessToken);
       oauthWindow.close();
     }

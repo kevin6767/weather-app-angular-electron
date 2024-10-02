@@ -44,14 +44,12 @@ export class TitleBarComponent {
   }
 
   navigateTo(route: string) {
-    console.log(`Navigating to: ${route}`);
     this.router.navigate([route]);
   }
 
   handleLogin() {
     this.processWorker = true;
     this.authService.login().then(() => {
-      console.log(this.processWorker);
       this.processWorker = false;
     });
   }
