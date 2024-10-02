@@ -55,7 +55,8 @@ I have developed a dynamic weather application using Electron, Angular, OAuth2, 
 
 ```bash
   git clone https://github.com/kevin6767/weather-app-angular-electron.git
-  cd https://github.com/kevin6767/weather-app-angular-electron.git
+  npm run install
+  npm run electron // this will run ng serve and run electron
 ```
 
 ## Environment Variables
