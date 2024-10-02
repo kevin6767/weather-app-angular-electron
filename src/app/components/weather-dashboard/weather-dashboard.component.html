@@ -1,8 +1,6 @@
 <div class="weather-dashboard">
   @if (isLoggedIn$) {
-    <h1>Welcome {{ (user$ | async)?.name }}
-        
-    </h1>
+    <h1>Welcome {{ (user$ | async)?.name }}</h1>
   } @else {
     <h1>Welcome Dashboard</h1>
   }
@@ -34,7 +32,7 @@
           <div class="weather-card">
             <h2>{{ data.location.name }}</h2>
             <img [src]="data.current.weather_icons[0]" alt="Weather icon" />
-            <p>Temperature: {{ data.current.temperature }} °C</p>
+            <p>Temperature: {{ weatherTemp }} °F</p>
             <p>Condition: {{ data.current.weather_descriptions[0] }}</p>
             <p>Humidity: {{ data.current.humidity }}%</p>
           </div>

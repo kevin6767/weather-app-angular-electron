@@ -11,6 +11,7 @@ import { WeatherService } from '../../services/weather/weather.service';
 import { Store } from '@ngrx/store';
 import { selectIsLoggedIn } from '../../selectors/auth.selectors';
 import { UserProfile } from '../../services/user/user.service';
+import { celsiusToFahrenheit } from './utils/weather-dashboard-util';
 
 @Component({
   selector: 'app-weather-dashboard',
@@ -25,6 +26,7 @@ export class WeatherDashboardComponent {
   errorMessage: string | null = null;
   user$: Observable<UserProfile>;
   isLoggedIn$: Observable<boolean>;
+  weatherTemp: number | null = null;
 
   private weatherService = inject(WeatherService);
 
@@ -50,6 +52,7 @@ export class WeatherDashboardComponent {
     this.data$.subscribe({
       next: (data) => {
         this.isLoading = false;
+        this.weatherTemp = celsiusToFahrenheit(data.current.temperature);
         if (data.error) {
           this.errorMessage = data.error.info;
           return;
